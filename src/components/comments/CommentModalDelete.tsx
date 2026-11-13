@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import {
   AlertDialogAction,
   AlertDialogCancel,
@@ -14,29 +13,31 @@ interface ModalDeleteProps {
   selectedId: string;
   setTrigger: React.Dispatch<React.SetStateAction<boolean>>;
 }
-function CommentModalDelete({selectedId, setTrigger }:ModalDeleteProps) {
-    const handleDelete = async () => {
-        try {
-            await requestComment.delete(`/comments/${selectedId}`);
-            setTrigger((prev ) => !prev)
-        } catch (error) {
-            
-        console.log(error)
-        }
+
+function CommentModalDelete({ selectedId, setTrigger }: ModalDeleteProps) {
+  const handleDelete = async () => {
+    try {
+      await requestComment.delete(`/comments/${selectedId}`);
+      setTrigger((prev) => !prev);
+    } catch (error) {
+      console.log(error);
     }
+  };
+
   return (
     <AlertDialogContent>
-      <button>Show Dialog</button>
       <AlertDialogHeader>
-        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+        <AlertDialogTitle>Delete this comment?</AlertDialogTitle>
         <AlertDialogDescription>
           This action cannot be undone. This will permanently delete your
-          account from our servers.
+          comment from our servers.
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>
-        <AlertDialogCancel>Cancel</AlertDialogCancel>
-        <AlertDialogAction>Continue</AlertDialogAction>
+        <AlertDialogCancel>No, keep comment</AlertDialogCancel>
+        <AlertDialogAction onClick={handleDelete}>
+          Yes, delete it
+        </AlertDialogAction>
       </AlertDialogFooter>
     </AlertDialogContent>
   );

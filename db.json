@@ -1,28 +1,28 @@
 {
   "comments": [
     {
-      "body": "rifky himawan w",
+      "body": "udh\n",
       "likes": 89320,
       "user": {
         "username": "rifky"
       },
-      "id": "1"
+      "id": "giWZkCftblM"
     },
     {
-      "body": "asdasda",
+      "body": "nama",
       "likes": 89320,
       "user": {
         "username": "rifky"
       },
-      "id": "HUMUhf__jqM"
+      "id": "XeCo6HSOylI"
     },
     {
-      "body": "namaaawasdaw",
+      "body": "nama",
       "likes": 89320,
       "user": {
         "username": "rifky"
       },
-      "id": "cX1HHBJkY54"
+      "id": "XijqB4ilWUk"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
