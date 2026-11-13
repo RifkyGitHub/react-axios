@@ -1,0 +1,29 @@
+{
+  "comments": [
+    {
+      "body": "rifky himawan widitama",
+      "likes": 89320,
+      "user": {
+        "username": "rifky"
+      },
+      "id": "1"
+    },
+    {
+      "body": "asdasda",
+      "likes": 89320,
+      "user": {
+        "username": "rifky"
+      },
+      "id": "HUMUhf__jqM"
+    },
+    {
+      "body": "namaaawasdaw",
+      "likes": 89320,
+      "user": {
+        "username": "rifky"
+      },
+      "id": "cX1HHBJkY54"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

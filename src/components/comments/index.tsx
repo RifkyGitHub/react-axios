@@ -1,36 +1,53 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import CommentsForm from "./CommentForm";
 import CommentsList from "./CommentList";
+import { requestComment } from "../axios";
+
+interface CommentForm {
+  setTrigger : React.Dispatch<React.SetStateAction<boolean>>
+}
 
 interface Comment {
-  id: number;
+  id: number | string;
   body: string;
   postId: number;
   likes: number;
-  user: {
-    id: number;
+  username?: string;
+  user?: {
+    id?: number;
     username: string;
-    fullname: string;
+    fullname?: string;
   };
 }
 
 function Comments() {
   const [comments, setComments] = useState([]);
-  
+  const [trigger, setTrigger] = useState();
 
   useEffect(() => {
     const getAllComments = async () => {
       try {
-        const response = await fetch("https://dummyjson.com/comments?limit=5");
-        const data = await response.json();
-        setComments(data.comments);
+        // await fetch('http://localhost:3000/comments' , {
+        //   method: "POST",
+        //   body: JSON.stringify({
+        //     body: "Ini komen dari await fetch",
+        //     likes: 42872,
+        //     user :{
+        //       username: "Joko",
+        //     },
+        //   })
+        // }) ;
+        const response = await requestComment.get("/comments");
+        // const data = await response.json();
+        // setComments(response.data);
+        setComments(response.data);
       } catch (error) {
         console.log(error);
-      }
+      } 
     };
 
     getAllComments();
-  }, []);
+  }, [trigger]);
 
   return (
     <main className="min-h-screen bg-[#F7F7F5] px-5 py-12 text-[#242421] md:px-10">
@@ -68,7 +85,7 @@ function Comments() {
               <span className="text-xs text-[#999990]">Latest activity</span>
             </div>
 
-            <CommentsList comments={comments} />
+            <CommentsList comments={comments} setTrigger={setTrigger} />
           </section>
 
           <aside>
@@ -87,7 +104,7 @@ function Comments() {
                 </p>
               </div>
 
-              <CommentsForm />
+              <CommentsForm setTrigger = {setTrigger} />
             </div>
           </aside>
         </div>

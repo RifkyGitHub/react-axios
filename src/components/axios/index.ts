@@ -12,3 +12,7 @@ export const requestPokemon = axios.create({
 export const fakeStoreAPI = axios.create({
     baseURL: 'https://fakestoreapi.com'
 })
+
+export const requestComment = axios.create({
+    baseURL: "http://localhost:3000"
+})

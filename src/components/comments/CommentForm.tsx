@@ -1,31 +1,48 @@
 import { useState } from "react";
+import { requestComment } from "../axios";
+import { Button } from "../ui/button";
 
-function CommentForm() {
+function CommentForm({setTrigger}: Comment) {
   const [comment, setComment] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("https://dummyjson.com/comments/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          body: comment,
-          postId: 3,
-          userId: 5,
-        }),
-      });
+      await requestComment.post("/comments" , {
+        body: comment,
+        likes: 89320,
+        user : {
+          username : "rifky",
+        }
+      })
 
-      const data = await response.json();
-      console.log(data);
-      setComment("");
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
+    // try {
+    //   const response = await fetch("https://dummyjson.com/comments/add", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //       body: comment,
+    //       postId: 3,
+
+          
+    //       userId: 5,
+    //     }),
+    //   });
+
+  //     const data = await response.json();
+  //     console.log(data);
+  //     setComment("");
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <form
@@ -48,12 +65,12 @@ function CommentForm() {
           className="min-h-36 w-full resize-none rounded-lg border border-[#E9E9E3] bg-[#FAFAF8] p-4 text-sm outline-none transition focus:border-[#A16B48]"
         />
 
-        <button
+        <Button
           type="submit"
           className="rounded-lg bg-[#292923] px-5 py-3 text-sm font-medium text-white transition hover:bg-[#A16B48]"
         >
          -Post comment -
-        </button>
+        </Button>
       </div>
     </form>
   );
