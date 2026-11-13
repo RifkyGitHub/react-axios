@@ -1,10 +1,10 @@
 import { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "../ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import CommentModalUpdate from "./CommentModalUpdate";
+import { Button } from "../ui/button";
+import { AlertDialog } from "../ui/alert-dialog";
+import { AlertDialogTrigger } from "../ui/alert-dialog";
+import { Pencil, Trash2 } from "lucide-react";
 
 interface Comment {
   id: string;
@@ -20,7 +20,7 @@ interface Comment {
 
 interface CommentListProps {
   comments: Comment[];
-  setTrigger: React.Dispatch<React.SetStateAction<undefined>>
+  setTrigger: React.Dispatch<React.SetStateAction<undefined>>;
 }
 
 function CommentList({ comments, setTrigger }: CommentListProps) {
@@ -29,6 +29,7 @@ function CommentList({ comments, setTrigger }: CommentListProps) {
   return (
     <section className="flex flex-col gap-3">
       <Dialog>
+        <AlertDialog>
         {comments.map((comment, index) => {
           return (
             <DialogTrigger
@@ -60,6 +61,27 @@ function CommentList({ comments, setTrigger }: CommentListProps) {
                 <span className="text-xs text-[#A1A198]">
                   Post ID / {comment.postId || 1}
                 </span>
+                <div className="flex items-center justify-between gap-2">
+                  {/* <p className="text-sm text-[#4A3525]">{comment.body}</p> */}
+                  <button
+                    type="button"
+                    className="flex items-center justify-center gap-1.5 rounded-lg border border-[#91694E] bg-[#91694E] px-3 py-1.5 text-sm font-medium text-white transition-all duration-200 hover:border-[#A16B48] hover:bg-[#A16B48] active:scale-95"
+                  >
+                    <Pencil className="h-3.5 w-3.5" />
+                    <span>Change</span>
+                  </button>
+
+                  <AlertDialog>
+                    <AlertDialogTrigger
+                      type="button"
+                      aria-label="Delete Comment"
+                      className="flex items-center justify-center gap-1.5 rounded-lg border border-[#91694E]/40 bg-transparent px-3 py-1.5 text-sm font-medium text-[#91694E] transition-all duration-200 hover:border-red-600 hover:bg-red-600 hover:text-white active:scale-95"
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                      <span>Delete</span>
+                    </AlertDialogTrigger>
+                  </AlertDialog>
+                </div>
 
                 <div className="flex items-center gap-2 text-xs font-medium text-[#91694E]">
                   <span>♡</span>
@@ -71,8 +93,9 @@ function CommentList({ comments, setTrigger }: CommentListProps) {
         })}
 
         <DialogContent className="rounded-2xl border border-[#E9E9E3] bg-white p-6 shadow-[0_20px_50px_rgba(0,0,0,0.08)] sm:max-w-md">
-          <CommentModalUpdate selectedId={selectedId} setTrigger={setTrigger}/>
+          <CommentModalUpdate selectedId={selectedId} setTrigger={setTrigger} />
         </DialogContent>
+        </AlertDialog>
       </Dialog>
     </section>
   );
