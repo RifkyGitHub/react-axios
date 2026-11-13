@@ -7,10 +7,10 @@ import {
 } from "../ui/dialog";
 import { requestComment } from "../axios";
 
-interface ModalUpdateProps {
-  selectedId: string;
-  setTrigger: React.Dispatch<React.SetStateAction<boolean>>;
-}
+  interface ModalUpdateProps {
+    selectedId: string;
+    setTrigger: React.Dispatch<React.SetStateAction<boolean>>;
+  }
 
 function CommentModalUpdate({ selectedId, setTrigger }: ModalUpdateProps) {
   const { register, setValue, handleSubmit } = useForm();

@@ -9,9 +9,20 @@ import {
   AlertDialogContent,
 } from "../ui/alert-dialog";
 import { requestComment } from "../axios";
-function CommentModalDelete() {
+
+interface ModalDeleteProps {
+  selectedId: string;
+  setTrigger: React.Dispatch<React.SetStateAction<boolean>>;
+}
+function CommentModalDelete({selectedId, setTrigger }:ModalDeleteProps) {
     const handleDelete = async () => {
-        
+        try {
+            await requestComment.delete(`/comments/${selectedId}`);
+            setTrigger((prev ) => !prev)
+        } catch (error) {
+            
+        console.log(error)
+        }
     }
   return (
     <AlertDialogContent>
