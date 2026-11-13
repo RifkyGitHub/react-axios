@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTrigger,
+} from "../ui/alert-dialog";
 import CommentModalUpdate from "./CommentModalUpdate";
-import { Button } from "../ui/button";
-import { AlertDialog } from "../ui/alert-dialog";
-import { AlertDialogTrigger } from "../ui/alert-dialog";
+import CommentModalDelete from "./CommentModalDelete";
 import { Pencil, Trash2 } from "lucide-react";
 
 interface Comment {
@@ -28,75 +31,84 @@ function CommentList({ comments, setTrigger }: CommentListProps) {
 
   return (
     <section className="flex flex-col gap-3">
-      <Dialog>
-        <AlertDialog>
-        {comments.map((comment, index) => {
-          return (
-            <DialogTrigger
-              key={comment.id}
-              onClick={() => setSelectedId(comment.id)}
-              className="group w-full cursor-pointer text-left rounded-xl border border-[#E9E9E3] bg-white p-5 transition-all duration-300 hover:border-[#C8A58B] hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)]"
-            >
-              <div className="mb-5 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#EEE9E2] text-sm font-semibold text-[#91694E]">
+      {comments.map((comment, index) => {
+        return (
+          <article
+            key={comment.id}
+            className="group w-full rounded-xl border border-[#E9E9E3] bg-white p-5 text-left transition-all duration-300 hover:border-[#C8A58B] hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)]"
+          >
+            <div className="mb-5 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#EEE9E2] text-sm font-semibold text-[#91694E]">
+                  {comment.username}
+                </div>
+
+                <div>
+                  <h3 className="text-sm font-semibold text-[#292923]">
                     {comment.username}
-                  </div>
+                  </h3>
 
-                  <div>
-                    <h3 className="text-sm font-semibold text-[#292923]">
-                      {comment.username}
-                    </h3>
-
-                    <p className="text-xs text-[#A1A198]">Community member</p>
-                  </div>
+                  <p className="text-xs text-[#A1A198]">Community member</p>
                 </div>
-
-                <span className="text-xs text-[#B8B8AF]">#{index + 1}</span>
               </div>
 
-              <p className="text-sm leading-7 text-[#62625B]">{comment.body}</p>
+              <span className="text-xs text-[#B8B8AF]">#{index + 1}</span>
+            </div>
 
-              <div className="mt-5 flex items-center justify-between border-t border-[#F0F0EB] pt-4">
-                <span className="text-xs text-[#A1A198]">
-                  Post ID / {comment.postId || 1}
-                </span>
-                <div className="flex items-center justify-between gap-2">
-                  {/* <p className="text-sm text-[#4A3525]">{comment.body}</p> */}
-                  <button
+            <p className="text-sm leading-7 text-[#62625B]">{comment.body}</p>
+
+            <div className="mt-5 flex items-center justify-between border-t border-[#F0F0EB] pt-4">
+              <span className="text-xs text-[#A1A198]">
+                Post ID / {comment.postId || 1}
+              </span>
+
+              <div className="flex items-center gap-2">
+                <Dialog>
+                  <DialogTrigger
                     type="button"
-                    className="flex items-center justify-center gap-1.5 rounded-lg border border-[#91694E] bg-[#91694E] px-3 py-1.5 text-sm font-medium text-white transition-all duration-200 hover:border-[#A16B48] hover:bg-[#A16B48] active:scale-95"
+                    onClick={() => setSelectedId(comment.id)}
+                    className="flex items-center justify-center gap-1 rounded-md border border-[#91694E] bg-[#91694E] px-2.5 py-1 text-xs font-medium text-white transition-all duration-200 hover:border-[#A16B48] hover:bg-[#A16B48] active:scale-95"
                   >
-                    <Pencil className="h-3.5 w-3.5" />
+                    <Pencil className="h-3 w-3" />
                     <span>Change</span>
-                  </button>
+                  </DialogTrigger>
 
-                  <AlertDialog>
-                    <AlertDialogTrigger
-                      type="button"
-                      aria-label="Delete Comment"
-                      className="flex items-center justify-center gap-1.5 rounded-lg border border-[#91694E]/40 bg-transparent px-3 py-1.5 text-sm font-medium text-[#91694E] transition-all duration-200 hover:border-red-600 hover:bg-red-600 hover:text-white active:scale-95"
-                    >
-                      <Trash2 className="h-3.5 w-3.5" />
-                      <span>Delete</span>
-                    </AlertDialogTrigger>
-                  </AlertDialog>
-                </div>
+                  <DialogContent className="rounded-2xl border border-[#E9E9E3] bg-white p-6 shadow-[0_20px_50px_rgba(0,0,0,0.08)] sm:max-w-md">
+                    <CommentModalUpdate
+                      selectedId={selectedId}
+                      setTrigger={setTrigger}
+                    />
+                  </DialogContent>
+                </Dialog>
 
-                <div className="flex items-center gap-2 text-xs font-medium text-[#91694E]">
-                  <span>♡</span>
-                  <span>{comment.likes} likes</span>
-                </div>
+                <AlertDialog>
+                  <AlertDialogTrigger
+                    type="button"
+                    onClick={() => setSelectedId(comment.id)}
+                    aria-label="Delete Comment"
+                    className="flex items-center justify-center gap-1 rounded-md border border-[#91694E]/40 bg-transparent px-2.5 py-1 text-xs font-medium text-[#91694E] transition-all duration-200 hover:border-red-600 hover:bg-red-600 hover:text-white active:scale-95"
+                  >
+                    <Trash2 className="h-3 w-3" />
+                    <span>Delete</span>
+                  </AlertDialogTrigger>
+
+                  <AlertDialogContent className="rounded-2xl border border-[#E9E9E3] bg-white p-6 shadow-[0_20px_50px_rgba(0,0,0,0.08)] sm:max-w-md">
+                    <CommentModalDelete
+                      selectedId={selectedId}
+                      setTrigger={setTrigger}
+                    />
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
-            </DialogTrigger>
-          );
-        })}
 
-        <DialogContent className="rounded-2xl border border-[#E9E9E3] bg-white p-6 shadow-[0_20px_50px_rgba(0,0,0,0.08)] sm:max-w-md">
-          <CommentModalUpdate selectedId={selectedId} setTrigger={setTrigger} />
-        </DialogContent>
-        </AlertDialog>
-      </Dialog>
+              <div className="flex items-center gap-2 text-xs font-medium text-[#91694E]">
+                <span>♡</span>
+                <span>{comment.likes} likes</span>
+              </div>
+            </div>
+          </article>
+        );
+      })}
     </section>
   );
 }

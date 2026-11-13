@@ -10,9 +10,12 @@ import {
 } from "../ui/alert-dialog";
 import { requestComment } from "../axios";
 function CommentModalDelete() {
+    const handleDelete = async () => {
+        
+    }
   return (
     <AlertDialogContent>
-      <Button variant="outline">Show Dialog</Button>
+      <button>Show Dialog</button>
       <AlertDialogHeader>
         <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
         <AlertDialogDescription>
